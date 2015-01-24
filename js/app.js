@@ -17,6 +17,7 @@ Github.Router.map(function() {
         this.resource('issues');
         this.resource('forks');
         this.resource('commits');
+        this.route('newissue');
       });
     }
   );
@@ -108,5 +109,41 @@ Github.CommitsRoute = Ember.Route.extend({
     var repo = this.modelFor('repository');
     var url = repo.commits_url.replace("{/sha}","");
     return Ember.$.getJSON(url);
+  }
+});
+
+Github.Issue = Ember.Object.extend({
+  title : '',
+  body : '',
+  isValid : function () {
+    // Perform some validations here
+    return true;
+  }
+});
+
+Github.RepositoryNewissueController = Ember.Controller.extend({
+  needs: ['repository'],
+  repo: Ember.computed.alias('controllers.repository'),
+  issue : function () {
+    return Github.Issue.create();
+  }.property('repo.model'),
+  actions: {
+    submitIssue: function () {
+      //var values = this.getProperties('title', 'body');
+      //console.log(values);
+      //POST issues_url
+
+      var issue = this.get('issue');
+      var url = this.get("repo").get("issues_url");
+      //Ember.$.post(url, {title:title, body:body}, function (result) {
+        // upon success
+        //this.transitionToRoute("issues");
+        //alert("Issues submitted");
+      //})
+      console.log("Submitted:  " + issue.get('title') + " to" + url);
+      // Unset the form after completion
+      this.set('issue', Github.Issue.create());
+      this.transitionToRoute('issues');
+    }
   }
 });

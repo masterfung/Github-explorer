@@ -128,8 +128,8 @@
       <li>Language: {{language}}</li>
       <li>Watchers: {{watchers}}</li>
       <li>Open Issues: {{open_issues}}</li>
-      <li>Clone: <b>{{clone_url}}</b></li>
-      <li>Web: <a {{bind attr href=html_url}} target=_blank></a></li>
+      <li>Clone: <a {{bind-attr href=clone_url}} target=_blank>{{clone_url}}</a></li>
+      <li>Web: <a {{bind-attr href=html_url}} target=_blank>{{html_url}}</a></li>
     </ul>
     <hr/>
     {{#unless forked}}
@@ -137,6 +137,7 @@
         <li>{{#link-to 'issues'}}Issues{{/link-to}}</li>
         <li>{{#link-to 'forks'}}Forks{{/link-to}}</li>
         <li>{{#link-to 'commits'}}Commits{{/link-to}}</li>
+        <li>{{#link-to 'repository.newissue'}}New Issue{{/link-to}}</li>
       </ul>
     {{else}}
     <ul class="list-inline">
@@ -205,6 +206,20 @@
       {{/each}}
 
     </table>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="repository/newissue">
+    <h3>Create an Issue</h3>
+    <div class="form-group">
+      <label for="title">Title</label><br/>
+      {{input value=issue.title class='form-control' placeholder='Input Issue Title'}}
+    </div>
+    <div class="form-group">
+      <label for="body">Body</label><br/>
+      {{textarea value=issue.body class='form-control' placeholder='Input Issue Body Description' row=10 col=10}}
+    </div>
+
+    <button class="btn btn-primary" {{action "submitIssue"}}>Process Issue</button>
   </script>
 
 
