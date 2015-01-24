@@ -132,11 +132,17 @@
       <li>Web: <a {{bind attr href=html_url}} target=_blank></a></li>
     </ul>
     <hr/>
+    {{#unless forked}}
+      <ul class="list-inline">
+        <li>{{#link-to 'issues'}}Issues{{/link-to}}</li>
+        <li>{{#link-to 'forks'}}Forks{{/link-to}}</li>
+        <li>{{#link-to 'commits'}}Commits{{/link-to}}</li>
+      </ul>
+    {{else}}
     <ul class="list-inline">
-      <li>{{#link-to 'issues'}}Issues{{/link-to}}</li>
-      <li>{{#link-to 'forks'}}Forks{{/link-to}}</li>
       <li>{{#link-to 'commits'}}Commits{{/link-to}}</li>
     </ul>
+    {{/unless}}
 
     {{outlet}}
 
@@ -149,7 +155,13 @@
         <tr>
           <td><img {{bind-attr src=issue.user.avatar_url}} alt="" style="width:35%"/></td>
           <td>{{issue.title}}</td>
-          <td>{{issue.created_at}}</td>
+          <td class="text-muted">{{fromDate issue.created_at}}</td>
+        </tr>
+      {{else}}
+        <tr>
+            <td>
+              <p class="text-muted">No Issues Yet! Horray!</p>
+            </td>
         </tr>
       {{/each}}
     </table>
@@ -157,18 +169,49 @@
 
   <script type="text/x-handlebars" data-template-name="forks">
     <h3>Forks</h3>
-
+    <table class="table table-striped">
+      {{#each forked in model}}
+      <tr>
+        <td><img {{bind-attr src=forked.user.avatar_url}} alt="" style="width:35%"/></td>
+        <td>{{forked.full_name}}</td>
+        <td class="text-muted">{{fromDate forked.created_at}}</td>
+      </tr>
+      {{else}}
+      <tr>
+        <td>
+          <p class="text-muted">No Forks Yet!</p>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
   </script>
 
   <script type="text/x-handlebars" data-template-name="commits">
     <h3>Commits</h3>
+    <table class="table table-striped">
+      {{#each commit in model}}
+      <tr>
+        <td><img {{bind-attr src=commit.author.avatar_url}} alt="" style="width:35%"/></td>
+        <td>{{commit.sha}}</td>
+        <p>{{commit.commit.message}}</p>
+        <td class="text-muted">{{fromDate commit.created_at}}</td>
+      </tr>
+      {{else}}
+      <tr>
+        <td>
+          <p class="text-muted">No Commits Yet! Add One Today!</p>
+        </td>
+      </tr>
+      {{/each}}
 
+    </table>
   </script>
 
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-v2.0.0.js"></script>
   <script src="js/libs/ember-1.9.1.js"></script>
+  <script src="js/libs/moment.js"></script>
   <script src="js/libs/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->

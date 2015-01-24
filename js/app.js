@@ -3,6 +3,12 @@ window.Github = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 
+Ember.Handlebars.registerBoundHelper('fromDate', function (theDate) {
+  var today = moment();
+  var target = moment(theDate);
+  return target.from(today);
+})
+
 Github.Router.map(function() {
   this.resource("user", {path: "/users/:login"},
     function () {
@@ -77,13 +83,30 @@ Github.RepositoriesController = Ember.ArrayController.extend({
 
 Github.RepositoryController = Ember.ObjectController.extend({
   needs : ['user'],
-  user : Ember.computed.alias("controllers.user")
+  user : Ember.computed.alias("controllers.user"),
+  forked: Ember.computed.alias("fork")
 });
 
 Github.IssuesRoute = Ember.Route.extend({
   model: function () {
     var repo = this.modelFor('repository');
     var url = repo.issues_url.replace('{/number}', '');
+    return Ember.$.getJSON(url);
+  }
+});
+
+Github.ForksRoute = Ember.Route.extend({
+  model: function () {
+    var repo = this.modelFor('repository');
+    var url = repo.forks_url;
+    return Ember.$.getJSON(url);
+  }
+});
+
+Github.CommitsRoute = Ember.Route.extend({
+  model: function () {
+    var repo = this.modelFor('repository');
+    var url = repo.commits_url.replace("{/sha}","");
     return Ember.$.getJSON(url);
   }
 });
