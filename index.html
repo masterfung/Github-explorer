@@ -15,22 +15,50 @@
   <script type="text/x-handlebars" data-template-name='application'>
     <div class="row">
       <div class="col-md-12">
-        <h1>Hello from Ember</h1>
         {{outlet}}
       </div>
     </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
-    <p>This came from the outlet.</p>
+    <h1>Hello from Ember</h1>
+    <hr/>
     <ul>
-    {{#each}}
-      <li>{{#link-to 'user' this}}{{name}}{{/link-to}}</a></li>
-    {{/each}}
+      {{#each}}
+        <li>{{#link-to 'user' this}}{{name}}{{/link-to}}</li>
+      {{/each}}
     </ul>
     <button class='btn btn-success' {{action 'clickMe'}}>Click Me</button>
     <p>{{renderedForth}}</p>
   </script>
+
+  <script type="text/x-handlebars" data-template-name="user">
+    <div class="row">
+    <div class="col-md-4">
+      <div class="well">
+        <p class="text-center">
+          {{#link-to 'user' this}}<img {{bind-attr src=avatar_url}} style="width:140px"/>{{/link-to}}
+        </p>
+        <h3>{{#link-to 'user' this}}{{name}}{{/link-to}}</h3>
+        <p>
+          Name: {{name}}<br/>
+          Location: {{location}}<br/>
+          Link: {{blog}}<br/>
+        </p>
+        <hr>
+        <table class="table table-striped">
+            <tr><td>Followers:</td><td>{{followers}}</td></tr>
+            <tr><td>Repositories:</td><td>{{public_repos}}</td></tr>
+            <tr><td>Gists:</td><td>{{public_gists}}</td></tr>
+        </table>
+        <p>
+          {{#link-to 'index'}}Back to Home{{/link-to}}
+        </p>
+      </div>
+    </div>
+    </div>
+  </script>
+
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>

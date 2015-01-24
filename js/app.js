@@ -3,7 +3,7 @@ window.Github = Ember.Application.create({
 });
 
 Github.Router.map(function() {
-  this.resource("user", {path: "/users/:name"})
+  this.resource("user", {path: "/users/:login"});
 });
 
 var devs = [
@@ -26,4 +26,11 @@ Github.IndexController = Ember.ArrayController.extend({
 			alert('I am dangerously clicked!');
 		}
 	}
-})
+});
+
+Github.UserRoute = Ember.Route.extend({
+	model: function(params) {
+		return Ember.$.getJSON("https://api.github.com/users/" +
+	 		params.login);
+	}
+});
