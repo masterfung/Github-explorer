@@ -2,3 +2,8 @@
 .ember-application {
     margin: 20px;
 }
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}

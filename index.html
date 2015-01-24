@@ -4,10 +4,23 @@
   <meta charset="utf-8">
   <title>Github Explorer</title>
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Github Explorer</a>
+      </div>
+  </div>
+
 
   <div class="container" id='github-app'></div>
 
@@ -21,15 +34,16 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
-    <h1>Hello from Ember</h1>
+    <h1>Github Explorer</h1>
+    <h4>Powered by Ember</h4>
     <hr/>
     <ul>
-      {{#each}}
-        <li>{{#link-to 'user' this}}{{name}}{{/link-to}}</li>
+      {{#each user in model}}
+        <li>{{#link-to 'user' this.user.login}}{{user.name}}{{/link-to}}</li>
       {{/each}}
     </ul>
-    <button class='btn btn-success' {{action 'clickMe'}}>Click Me</button>
-    <br>
+    <button class='btn btn-success' {{ action 'clickMe'}}>Click Me</button>
+    <hr/>
     <p>{{renderedForth}}</p>
   </script>
 
@@ -45,16 +59,18 @@
           Name: {{name}}<br/>
           Location: {{location}}<br/>
           Link: {{blog}}<br/>
+          Company: {{company}}<br />
+          Email: {{email}}<br />
         </p>
-        <hr>
+        <hr/>
         <table class="table table-striped">
             <tr><td>Followers:</td><td>{{followers}}</td></tr>
             <tr><td>Repositories:</td><td>{{public_repos}}</td></tr>
             <tr><td>Gists:</td><td>{{public_gists}}</td></tr>
         </table>
-        <p>
+        <button class="btn btn-info">
           {{#link-to 'index'}}Back to Home{{/link-to}}
-        </p>
+        </button>
       </div>
     </div>
       <div class="col-md-8">
@@ -74,12 +90,23 @@
 
   </script>
 
-  <script type="text/x-handlebars" id="repositories">
+  <script type="text/x-handlebars" data-template-name="repositories">
+    <ol class="breadcrumb">
+      <li>{{#link-to 'index'}}Developers{{/link-to}}</li>
+      <li>{{#link-to 'user' user}}{{user.name}}{{/link-to}}</li>
+      <li class="active">Repositories</li>
+    </ol>
+
+    <h2>List of Repositories</h2>
+
     <table class="table table-striped">
       {{#each repo in model}}
         <tr>
           <td>
-            {{repo.name}}
+            <h4>{{#link-to 'repository' this}}{{repo.name}}{{/link-to}}</h4>
+          </td>
+          <td>
+            {{description}}
           </td>
         </tr>
       {{/each}}
@@ -87,10 +114,29 @@
 
   </script>
 
+  <script type="text/x-handlebars" data-template-name="repository">
+    <ol class="breadcrumb">
+      <li>{{#link-to 'index'}}Developers{{/link-to}}</li>
+      <li>{{#link-to 'user' user}}{{user.name}}{{/link-to}}</li>
+      <li>{{#link-to 'repositories'}}Repositories{{/link-to}}</li>
+      <li class="active">{{name}}</li>
+    </ol>
+
+    <h1>{{name}} Repository</h1>
+    <p>{{description}}</p>
+    <ul>
+      <li>Language: {{language}}</li>
+      <li>Watchers: {{watchers}}</li>
+      <li>Open Issues: {{open_issues}}</li>
+      <li>Clone: <b>{{clone_url}}</b></li>
+      <li>Web: <a {{bind attr href=html_url}} target=_blank></a></li>
+    </ul>
+  </script>
+
   <script src="js/libs/jquery-1.10.2.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="js/libs/handlebars-v2.0.0.js"></script>
   <script src="js/libs/ember-1.9.1.js"></script>
+  <script src="js/libs/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
