@@ -8,7 +8,9 @@ Github.Router.map(function() {
     function () {
       this.resource('repositories', {path: 'repositories'});
       this.resource("repository", { path: "repositories/:reposit"}, function () {
-        this.resource('issues')
+        this.resource('issues');
+        this.resource('forks');
+        this.resource('commits');
       });
     }
   );
@@ -76,4 +78,12 @@ Github.RepositoriesController = Ember.ArrayController.extend({
 Github.RepositoryController = Ember.ObjectController.extend({
   needs : ['user'],
   user : Ember.computed.alias("controllers.user")
+});
+
+Github.IssuesRoute = Ember.Route.extend({
+  model: function () {
+    var repo = this.modelFor('repository');
+    var url = repo.issues_url.replace('{/number}', '');
+    return Ember.$.getJSON(url);
+  }
 });

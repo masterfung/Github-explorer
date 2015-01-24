@@ -54,13 +54,13 @@
         <p class="text-center">
           {{#link-to 'user' this}}<img {{bind-attr src=avatar_url}} style="width:140px"/>{{/link-to}}
         </p>
-        <h3>{{#link-to 'user' this}}{{name}}{{/link-to}}</h3>
-        <p>
-          Name: {{name}}<br/>
-          Location: {{location}}<br/>
-          Link: {{blog}}<br/>
-          Company: {{company}}<br />
-          Email: {{email}}<br />
+        <h3 class="text-center">{{#link-to 'user' this}}{{name}}{{/link-to}}</h3>
+        <p class="text-center">
+          <b>Name:</b> {{name}}<br/>
+          <b>Location:</b> {{location}}<br/>
+          <b>Link:</b> {{blog}}<br/>
+          <b>Company:</b> {{company}}<br />
+          <b>Email:</b> {{email}}<br />
         </p>
         <hr/>
         <table class="table table-striped">
@@ -133,7 +133,9 @@
     </ul>
     <hr/>
     <ul class="list-inline">
-      <li>{{#link-to 'issues'}}{{/link-to}}</li>
+      <li>{{#link-to 'issues'}}Issues{{/link-to}}</li>
+      <li>{{#link-to 'forks'}}Forks{{/link-to}}</li>
+      <li>{{#link-to 'commits'}}Commits{{/link-to}}</li>
     </ul>
 
     {{outlet}}
@@ -141,9 +143,28 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="issues">
+    <h3>Issues</h3>
+    <table class="table table-striped">
+      {{#each issue in model}}
+        <tr>
+          <td><img {{bind-attr src=issue.user.avatar_url}} alt="" style="width:35%"/></td>
+          <td>{{issue.title}}</td>
+          <td>{{issue.created_at}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </script>
 
+  <script type="text/x-handlebars" data-template-name="forks">
+    <h3>Forks</h3>
 
   </script>
+
+  <script type="text/x-handlebars" data-template-name="commits">
+    <h3>Commits</h3>
+
+  </script>
+
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-v2.0.0.js"></script>
