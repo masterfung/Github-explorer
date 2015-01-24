@@ -24,11 +24,12 @@
     <h1>Hello from Ember</h1>
     <hr/>
     <ul>
-      {{#each}}
-        <li>{{#link-to 'user' this}}{{name}}{{/link-to}}</li>
+      {{#each user in model}}
+        <li>{{#link-to 'user' this}}{{user.name}}{{/link-to}}</li>
       {{/each}}
     </ul>
     <button class='btn btn-success' {{action 'clickMe'}}>Click Me</button>
+    <br>
     <p>{{renderedForth}}</p>
   </script>
 
@@ -56,6 +57,15 @@
         </p>
       </div>
     </div>
+      <div class="col-md-8">
+        <h2>{{name}}'s Github</h2>
+        <hr/>
+        <ul>
+          <li><a href="#">Repositories</a></li>
+          <li><a href="#">News & Events</a></li>
+          <li><a href="#">Gists</a></li>
+        </ul>
+      </div>
     </div>
   </script>
 

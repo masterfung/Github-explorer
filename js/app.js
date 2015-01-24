@@ -9,7 +9,7 @@ Github.Router.map(function() {
 var devs = [
 	{login: "django", name: "Django"},
 	{login: 'masterfung', name: "Tsung Hung"}
-	]
+	];
 
 Github.IndexRoute = Ember.Route.extend({
   model: function() {
