@@ -8,16 +8,24 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <script type="text/x-handlebars">
-    <h2>Welcome to Ember.js</h2>
 
-    {{outlet}}
+  <div class="container" id='github-app'></div>
+
+
+  <script type="text/x-handlebars" data-template-name='application'>
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Hello from Ember</h1>
+        {{outlet}}
+      </div>
+    </div>
   </script>
 
-  <script type="text/x-handlebars" id="index">
+  <script type="text/x-handlebars" data-template-name="index">
+    <p>This came from the outlet.</p>
     <ul>
     {{#each item in model}}
-      <li>{{item}}</li>
+      <li><a href = "#">{{item}}</a></li>
     {{/each}}
     </ul>
   </script>

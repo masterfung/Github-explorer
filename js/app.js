@@ -1,4 +1,6 @@
-window.Github = Ember.Application.create({});
+window.Github = Ember.Application.create({
+	rootElement : '#github-app'
+});
 
 Github.Router.map(function() {
   // put your routes here
@@ -6,6 +8,10 @@ Github.Router.map(function() {
 
 Github.IndexRoute = Ember.Route.extend({
   model: function() {
-    return ['asian', 'yellow', 'glow'];
+    return [
+    'Tsung Hung', 
+    'Django', 
+    'Django Rest Framework'
+    ];
   }
 });
