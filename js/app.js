@@ -7,7 +7,9 @@ Github.Router.map(function() {
   this.resource("user", {path: "/users/:login"},
     function () {
       this.resource('repositories', {path: 'repositories'});
-      this.resource("repository", { path: "repositories/:reponame"});
+      this.resource("repository", { path: "repositories/:reposit"}, function () {
+        this.resource('issues')
+      });
     }
   );
 });
@@ -60,9 +62,8 @@ Github.RepositoriesRoute = Ember.Route.extend({
 
 Github.RepositoryRoute = Ember.Route.extend({
   model: function (params) {
-    var user = this.modelFor("user");
-    //build the URL for the Repo call manually
-    var url = "https://api.github.com/repos/" + user.login + "/" + params.reponame;
+    var user = this.modelFor('user');
+    var url = "https://api.github.com/repos/" + user.login + "/" + params.reposit;
     return Ember.$.getJSON(url);
   }
 });

@@ -103,7 +103,7 @@
       {{#each repo in model}}
         <tr>
           <td>
-            <h4>{{#link-to 'repository' this}}{{repo.name}}{{/link-to}}</h4>
+            <h4>{{#link-to 'repository' this.repo.name}}{{repo.name}}{{/link-to}}</h4>
           </td>
           <td>
             {{description}}
@@ -131,6 +131,18 @@
       <li>Clone: <b>{{clone_url}}</b></li>
       <li>Web: <a {{bind attr href=html_url}} target=_blank></a></li>
     </ul>
+    <hr/>
+    <ul class="list-inline">
+      <li>{{#link-to 'issues'}}{{/link-to}}</li>
+    </ul>
+
+    {{outlet}}
+
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="issues">
+
+
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
