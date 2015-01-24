@@ -24,10 +24,12 @@
   <script type="text/x-handlebars" data-template-name="index">
     <p>This came from the outlet.</p>
     <ul>
-    {{#each item in model}}
-      <li><a href = "#">{{item}}</a></li>
+    {{#each}}
+      <li>{{#link-to 'user' this}}{{name}}{{/link-to}}</a></li>
     {{/each}}
     </ul>
+    <button class='btn btn-success' {{action 'clickMe'}}>Click Me</button>
+    <p>{{renderedForth}}</p>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>

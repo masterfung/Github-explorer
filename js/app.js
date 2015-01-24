@@ -3,15 +3,27 @@ window.Github = Ember.Application.create({
 });
 
 Github.Router.map(function() {
-  // put your routes here
+  this.resource("user", {path: "/users/:name"})
 });
+
+var devs = [
+	{login: "django", name: "Django"},
+	{login: 'masterfung', name: "Tsung Hung"}
+	]
 
 Github.IndexRoute = Ember.Route.extend({
   model: function() {
-    return [
-    'Tsung Hung', 
-    'Django', 
-    'Django Rest Framework'
-    ];
+    return devs;
   }
 });
+
+Github.IndexController = Ember.ArrayController.extend({
+	renderedForth: function () {
+		return new Date();
+	}.property(),
+	actions : {
+		clickMe: function () {
+			alert('I am dangerously clicked!');
+		}
+	}
+})
