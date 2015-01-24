@@ -3,7 +3,11 @@ window.Github = Ember.Application.create({
 });
 
 Github.Router.map(function() {
-  this.resource("user", {path: "/users/:login"});
+  this.resource("user", {path: "/users/:login"},
+    function () {
+      this.resource('repositories', {path: 'repositories'})
+    }
+  );
 });
 
 var devs = [
@@ -34,3 +38,17 @@ Github.UserRoute = Ember.Route.extend({
 	 		params.login);
 	}
 });
+
+
+Github.UserIndexRoute = Ember.Route.extend({
+  model: function () {
+    return this.modelFor('user');
+  }
+});
+
+Github.RepositoriesRoute = Ember.Route.extend({
+  model: function () {
+    var user = this.modelFor('user');
+    return Ember.$.getJSON(user.repos_url);
+  }
+})

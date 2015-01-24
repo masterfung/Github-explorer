@@ -24,8 +24,8 @@
     <h1>Hello from Ember</h1>
     <hr/>
     <ul>
-      {{#each user in model}}
-        <li>{{#link-to 'user' this}}{{user.name}}{{/link-to}}</li>
+      {{#each}}
+        <li>{{#link-to 'user' this}}{{name}}{{/link-to}}</li>
       {{/each}}
     </ul>
     <button class='btn btn-success' {{action 'clickMe'}}>Click Me</button>
@@ -58,17 +58,34 @@
       </div>
     </div>
       <div class="col-md-8">
-        <h2>{{name}}'s Github</h2>
-        <hr/>
-        <ul>
-          <li><a href="#">Repositories</a></li>
-          <li><a href="#">News & Events</a></li>
-          <li><a href="#">Gists</a></li>
-        </ul>
+        {{outlet}}
       </div>
     </div>
   </script>
 
+  <script type="text/x-handlebars" id="user/index">
+    <h2>{{name}}'s Github</h2>
+    <hr/>
+    <ul>
+      <li>{{#link-to 'repositories' this}}Repositories{{/link-to}}</li>
+      <li><a href="#">News & Events</a></li>
+      <li><a href="#">Gists</a></li>
+    </ul>
+
+  </script>
+
+  <script type="text/x-handlebars" id="repositories">
+    <table class="table table-striped">
+      {{#each repo in model}}
+        <tr>
+          <td>
+            {{repo.name}}
+          </td>
+        </tr>
+      {{/each}}
+    </table>
+
+  </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
